@@ -11,6 +11,9 @@ args = parser.parse_args()
     
 pointFilePath = "../../points"
 
+if not os.path.exists(pointFilePath):
+    os.makedirs(pointFilePath)
+
 for root, dirs, files in os.walk(pointFilePath):
     fileNumList = []
     for name in files:

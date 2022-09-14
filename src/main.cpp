@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <unistd.h>
 
-#include "Painter.h"
+#include "painter.h"
 #include "data.h"
 
 using namespace std;
@@ -13,30 +14,46 @@ using namespace gui;
 
 int main(int argc, char *argv[])
 {
-    bool isGui = false;
     string inputFileName;
+    int clusterNum = 169;
+    int capacity = 30;
+    bool verbose = false;
 
-    if(argc > 1)
+    int opt;
+    while((opt = getopt(argc, argv, ":f:n:c:v")) != -1)
     {
-        inputFileName = string(argv[1]);
-        if(argc > 2)
-            if(string(argv[2]) == "gui")
-                isGui = true;
+        switch(opt)
+        {
+            case 'f':
+                inputFileName = string(optarg);
+                break;
+            case 'n':
+                clusterNum = atoi(optarg);
+                break;
+            case 'c':
+                capacity = atoi(optarg);
+                break;
+            case 'v':
+                verbose = true;
+                break;
+            case '?':
+                cout << "unknown option: " << char(optopt) << endl;
+                break;
+        }
     }
+
+    //Argument summary
+    if(!inputFileName.empty())
+        cout << "Input File: " << inputFileName << endl;
     else
-    {
-        cout << "Error: Invalid input arguments" << endl;
-        cout << "   ./SteinerTree <fileName> <gui>" << endl;
-        return 0;
-    }
+        cout << "ERROR: no input file" << endl;
+    cout << "Perform capacitated k means clustering" << endl;
+    cout << "    Cluster number " << clusterNum << " with maximum capacity " << capacity << endl;
 
-    mydata D;
+    mydata D(verbose);
     D.parse(inputFileName);
-    
-    D.capKmeans(169, 30);
+    D.capKmeans(clusterNum, capacity);
     D.clusterInfo();
 
-    D.check();
-    
     return 0;
 }

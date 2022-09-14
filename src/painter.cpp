@@ -3,7 +3,7 @@
 #include <cstring>
 #include <iostream>
 
-#include "Painter.h"
+#include "painter.h"
 #include "db.h"
 
 namespace gui {

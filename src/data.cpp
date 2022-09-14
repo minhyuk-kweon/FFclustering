@@ -2,22 +2,22 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <filesystem>
 
 #include "data.h"
-#include "Painter.h"
+#include "painter.h"
 
 using namespace std;
 using namespace gui;
 
 mydata::mydata()
 {
-    //std::random_device rd;
-    //rdGen(rd());
-    //rdGen = new mt19937(rd());
-    //distrib(0, 255);
-    //distrib = new uniform_int_distribution<>(0, 255);
+    painter_ = new Painter();
+}
 
-    //cout << distrib(rdGen) << endl;
+mydata::mydata(bool verbose)
+{
+    verbose_ = verbose;
     painter_ = new Painter();
 }
 
@@ -89,39 +89,28 @@ void mydata::findGridSize(string fileName)
 
 void mydata::clusterInfo()
 {
-    for(Cluster& cluster : clusters_)
+    if(verbose_)
     {
-        int x, y;
-        //double x, y;
-        cluster.getCentroid(x, y);
-        cout << "Cluster (" << x << ", " << y << ") " << cluster.size() << endl;
+        for(Cluster& cluster : clusters_)
+        {
+            int x, y;
+            //double x, y;
+            cluster.getCentroid(x, y);
+            cout << "Cluster (" << x << ", " << y << ") " << cluster.size() << endl;
+        }
     }
-}
-
-void mydata::check()
-{
-    //for(Point pt : points_)
-    //{
-    //    //cout << pt.getX() << " " << pt.getY() << endl;
-    //    painter_->drawPoint(pt, gui::black);
-    //}
-
-    //cout << "total " << points_.size() << endl;
-    //painter_->show();
 }
 
 void mydata::savePng(int step)
 {
-    //random_device rd;
-    //mt19937 gen(rd());
-    //uniform_int_distribution<int> distrib(0, 255);
-
+    string outputDir = "../png";
+    if(!filesystem::is_directory(outputDir))
+        filesystem::create_directory(outputDir);
+    string fileName = outputDir + "/" + to_string(step) + ".png";
+    
     painter_->setWindow(800, 800);
     painter_->setBackground(gridSize, gridSize);
 
-    //file name
-    string fileName = "../png/" + to_string(step) + ".png";
-    
     //draw points
     for(Cluster& cluster : clusters_)
     {
