@@ -14,4 +14,15 @@ cd build
 cmake ..
 make
 ```
+To execute, input file is needed. We provide several example files (FFclustering/points) and random point generation script (FFclustering/src/pointgen).
 
+```
+./ffclustering -f <input file>
+```
+
+There are other nonessential options.
+```
+-n <cluster num> : Number of clusters
+-c <maximum capacity> : Maximum capacity of each cluster
+-v : verbose
+```
