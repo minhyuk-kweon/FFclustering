@@ -29,8 +29,8 @@ There are other nonessential options.
 ```
 
 ### Point generation (Python)
-The name of input file should be point<num>_<grid>x<grid>_<id>.pt , where <num> is number of points, <grid> is the size of region where points are located, <id> is the identical number of the .pt file. All points are generated with uniform distribution within the grid range.
+The name of input file should be point<num>_<grid>x<grid>_<id>.pt , where <num> is number of points, <grid> is the size of region where points are located, <id> is the identical number of the .pt file. All points are generated with uniform distribution within the grid range. In addition, -b option can determine how many obstacles are randomly generated. Obstacles width and height are equal or less than (gridSize / 4).
 ```
 cd src/pointgen
-python main.py -n <num> -g <grid>
+python main.py -g <grid> -n <pointNum> -b <blockNum>
 ```
