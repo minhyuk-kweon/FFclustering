@@ -4,7 +4,6 @@ import argparse
 import pointGeneration as pg
 
 parser = argparse.ArgumentParser()
-#parser.add_argument("fileName", help="file name of point set")
 parser.add_argument("-n", "--pointNum", type=int, default=100, help="number of points")
 parser.add_argument("-g", "--gridSize", type=int, default=100, help="range of the points 0 ~ gridSize")
 args = parser.parse_args()
@@ -40,11 +39,3 @@ width = args.gridSize
 
 pointset = pg.point_generate(low, high, num, width)
 
-wfile = open(fileName, 'w')
-for points in pointset:
-    num_str = "%d\n" % (len(points)) 
-    wfile.write(num_str)
-    for point in points:
-        point_str = "%d %d\n" % (point[0], point[1])
-        wfile.write(point_str)
-wfile.close()
